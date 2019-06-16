@@ -509,6 +509,87 @@ The BaselineOnly model seems to work best with bigger rating counts as they have
 ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002, s=150, figsize=(10,10))
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/BaselineOnly_Scatterplot.png'>
+The model had its best performance when movies with ratings between 3 to 4.5 are predicted.<br><br>
+Let's go through the same process for the KNNBaseline model:
+<pre>
+predictions2 = KNNBaseline(n_epochs=5, lr_all=0.002, reg_all=0.4).fit(trainset).test(testset)
+ResultCatcher2 = pd.DataFrame(predictions2, columns=['userId', 'movieId', 'Real_Rating', 'Estimated_Rating', 'details'])
+ResultCatcher2.drop(['details'], axis=1, inplace=True)
+ResultCatcher2['Estimation_Rounded'] = ResultCatcher2.apply(lambda row: halfrounder(row.Estimated_Rating), axis=1)
+ResultCatcher2['Error'] = abs(ResultCatcher2['Real_Rating'] - ResultCatcher2['Estimation_Rounded'])
+ResultCatcher2.head()
+</pre>
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>userId</th>
+      <th>movieId</th>
+      <th>Real_Rating</th>
+      <th>Estimated_Rating</th>
+      <th>Estimation_Rounded</th>
+      <th>Error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>57</td>
+      <td>1953</td>
+      <td>5.0</td>
+      <td>4.509060</td>
+      <td>4.5</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>585</td>
+      <td>3052</td>
+      <td>4.0</td>
+      <td>3.950890</td>
+      <td>4.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>205</td>
+      <td>1210</td>
+      <td>3.0</td>
+      <td>3.652286</td>
+      <td>3.5</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>120</td>
+      <td>1721</td>
+      <td>3.5</td>
+      <td>3.545518</td>
+      <td>3.5</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>547</td>
+      <td>4239</td>
+      <td>3.0</td>
+      <td>3.426906</td>
+      <td>3.5</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+<pre>
+ResultCatcher2['Error'].sum()
+>>>9143.0
+ResultCatcher2['Real_Rating'][ResultCatcher2['Error'] == 0].count()
+>>>3725
+ResultComparison2 = pd.DataFrame({'Count': ResultCatcher2.groupby(['Real_Rating']).size(),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Avg_Rounded_Est': ResultCatcher2.groupby(['Real_Rating'])['Estimation_Rounded'].mean()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).reset_index()
+ResultComparison2
+</pre>
+
 
 
 <br><br><br><br><br>Skew: When the code is ran without eliminating the small number of ratings, total error rate was much higher: GIVE THE ACTUAL NUMBER!!!!eleven!! 
