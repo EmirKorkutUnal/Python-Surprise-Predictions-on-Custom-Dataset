@@ -589,6 +589,83 @@ ResultComparison2 = pd.DataFrame({'Count': ResultCatcher2.groupby(['Real_Rating'
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).reset_index()
 ResultComparison2
 </pre>
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Real_Rating</th>
+      <th>Count</th>
+      <th>Avg_Rounded_Est</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.5</td>
+      <td>124</td>
+      <td>3.173387</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>390</td>
+      <td>3.097436</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.5</td>
+      <td>181</td>
+      <td>3.055249</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.0</td>
+      <td>881</td>
+      <td>3.230988</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.5</td>
+      <td>574</td>
+      <td>3.178571</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3.0</td>
+      <td>2677</td>
+      <td>3.457041</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3.5</td>
+      <td>1512</td>
+      <td>3.554233</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4.0</td>
+      <td>4357</td>
+      <td>3.751434</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4.5</td>
+      <td>1175</td>
+      <td>3.921277</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>5.0</td>
+      <td>2413</td>
+      <td>4.015955</td>
+    </tr>
+  </tbody>
+</table>
+<pre>
+ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002, s=150, figsize=(10,10))
+</pre>
+<img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
+
 
 
 
