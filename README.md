@@ -508,7 +508,7 @@ The BaselineOnly model seems to work best with bigger rating counts as they have
 <pre>
 ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002, s=150, figsize=(10,10))
 </pre>
-
+<img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/BaselineOnly_Scatterplot.png'>
 
 
 <br><br><br><br><br>Skew: When the code is ran without eliminating the small number of ratings, total error rate was much higher: GIVE THE ACTUAL NUMBER!!!!eleven!! 
