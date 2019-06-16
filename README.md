@@ -84,7 +84,7 @@ This is what our data looks like:
 df.shape
 >>>(100004, 4)
 </pre>
-We have a dataframe with 10.004 ovservations and 4 variables. The variables are the ID number for users, ID number for movies, rating (in a scale of 5) and a timestamp.
+We have a dataframe with 10.004 observations and 4 variables. The variables are the ID number for users, ID number for movies, rating (in a scale of 5) and a timestamp.
 <h3>Removing Movies that are Rated Less than Others</h3>
 <b>If a movie is rated only a small number of times, the ratings of that movie can skew prediction algorithms</b>; so we're going to get rid of some observations.
 <pre>
@@ -668,8 +668,3 @@ ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002,
 Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
 Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped. 
 
-
-
-
-
-<br><br><br><br><br>Skew: When the code is ran without eliminating the small number of ratings, total error rate was much higher: GIVE THE ACTUAL NUMBER!!!!eleven!! 
