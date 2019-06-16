@@ -666,5 +666,5 @@ ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002,
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
 Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
-Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped. 
+Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped. When using BaselineOnly, the summary of errors for the whole database 
 
