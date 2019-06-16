@@ -668,7 +668,7 @@ ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002,
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
 Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
-Just to spice things up, you can <b>check the summary of errors for the original database where small number of rating counts are not ruled out</b>. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped.<br><br>
+Just to spice things up, you can <b>compare these results with the results of the analysis for the original database where small number of rating counts are not ruled out</b>. The code is not provided here, though the analysis is done through the same process; the only difference is that the remobing step at the beginning is skipped.<br><br>
 When using BaselineOnly, the <b>summary of errors for the whole database is 19.38% of the actual ratings, and 23.39% of the 20.001 observations are predicted correctly</b>.<br>
 The numbers for the 'cleaner' dataset were that the <b>summary of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly</b>.<br><br>
 This proves the point of not including movies with small number of ratings into the analysis.
