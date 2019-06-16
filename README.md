@@ -419,10 +419,12 @@ ResultCatcher['Real_Rating'].sum()
 >>>52024.0
 ResultCatcher['Error'].sum()
 >>>9240.0
+ResultCatcher['Real_Rating'].count()
+>>>14284
 ResultCatcher['Real_Rating'][ResultCatcher['Error'] == 0].count()
 >>>3704
 </pre>
-You can see that <b>total summary of errors is less than 20% of actual ratings, but only around 7% of all predictions are exactly correct.</b> To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
+You can see that the <b>summary of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly.</b> To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
 <pre>
 ResultComparison = pd.DataFrame({'Count': ResultCatcher.groupby(['Real_Rating']).size(),
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Avg_Rounded_Est': ResultCatcher.groupby(['Real_Rating'])['Estimation_Rounded'].mean()
@@ -666,5 +668,7 @@ ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002,
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
 Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
-Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped. When using BaselineOnly, the summary of errors for the whole database 
+Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped.<br><br>
+When using BaselineOnly, the summary of errors for the whole database is 19.38% of the actual ratings, and 23.39% of the 20.001 observations are predicted correctly.<br>
+The numbers for the 'cleaner' dataset were that the summary of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly.
 
