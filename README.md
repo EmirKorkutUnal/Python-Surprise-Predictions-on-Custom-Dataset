@@ -321,7 +321,7 @@ print('Best MAE:', gsKNNB.best_score['mae'], gsKNNB.best_params['mae'])
 >>>Best RMSE: 0.8697179739351221 {'n_epochs': 5, 'lr_all': 0.002, 'reg_all': 0.4}
 >>>Best MAE: 0.6658498081065872 {'n_epochs': 5, 'lr_all': 0.002, 'reg_all': 0.4}
 </pre>
-Again, both RMSE and MAE are achiebed by the same parameter combination.
+Again, both RMSE and MAE are achieved by the same parameter combination.
 <h3>Predictions</h3>
 Remember the dfsv database that we built at the beginning? Now it's time to use it.<br>
 <b>Surprise doesn't accept the test split of the standard Pandas dataframe</b> even after it is converted to a surprise dataset. So, we're going to need another method to get our test dataset. For this, the train_test_split method of surprise needs to be called: Beware that <b>since you've already imported scikit-learn's splitter, this train_test_split needs another name</b> so that it doesn't replace the previous one.
@@ -422,7 +422,7 @@ ResultCatcher['Error'].sum()
 ResultCatcher['Real_Rating'][ResultCatcher['Error'] == 0].count()
 >>>3704
 </pre>
-You can see that total summary of errors is less than 20% of actual ratings, but only around 7% of all predictions are exactly correct. To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
+You can see that <b>total summary of errors is less than 20% of actual ratings, but only around 7% of all predictions are exactly correct.</b> To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
 <pre>
 ResultComparison = pd.DataFrame({'Count': ResultCatcher.groupby(['Real_Rating']).size(),
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Avg_Rounded_Est': ResultCatcher.groupby(['Real_Rating'])['Estimation_Rounded'].mean()
@@ -504,7 +504,7 @@ ResultComparison
     </tr>
   </tbody>
 </table>
-The BaselineOnly model seems to work best with bigger rating counts as they have better average rounded estimations. Of course, this is somewhat expected: The more skew the observations have, the more skewed the predictions will be.
+The BaselineOnly model seems to <b>work best with bigger rating counts</b> as they have better average rounded estimations. Of course, this is somewhat expected: The more skew the observations have, the more skewed the predictions will be.
 <pre>
 ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002, s=150, figsize=(10,10))
 </pre>
@@ -665,6 +665,9 @@ ResultComparison2
 ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002, s=150, figsize=(10,10))
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
+Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
+Just to spice things up, you can check the summary of errors for the original database where small number of rating counts are not ruled out. The code is not provided here, though the analysis is done through the same process, the only difference is that the cleaning at the beginning is skipped. 
+
 
 
 
