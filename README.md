@@ -1,5 +1,6 @@
 <h1>Python Surprise Predictions on Custom Dataset</h1>
-This article is about using <a href=http://surpriselib.com/>surprise</a> library, Python's recommendation sci-kit, to predict user ratings for movies using a different database then the built-in one.<br><br>
+This article is about using <a href=http://surpriselib.com/>surprise</a> library, Python's recommendation sci-kit, to predict user ratings for movies using a different database then the built-in one.
+<h2>Intro</h2>
 There are many powerful recommendation algorithms within surprise. You can compare them to find the best model for your rating database, further enhance the model with parameter tuning, and use that model for predictions.<br><br>
 <b>There is one important thing to mention here:</b> Throughout Python SciKits (SciPy Toolkits), you will usually encounter the same notation for using commands to analyze datasets. The common way of analyzing any dataset in python is seperate it into predictors (x) and targets (y). <b>Surprise, on the contrast, has its own way of working</b>. It only accepts databases built in a certain way and therefore you're expected to keep the dataset in one piece and change variable names. If you're used to the convenience of scikit-learn, this would cause you some discomfort. <b>Surprise also has distinct train_test_split, GridSearch, cross_validate and KFold methods</b>; these support its own working algorithm.
 <h2>Methodology</h2>
