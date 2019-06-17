@@ -676,7 +676,7 @@ When using BaselineOnly,
 <ul>
  <li> the full dataset achieved a <b>sum of errors that is 19,38% of the actual ratings, and 23,39% of the 20.001 observations are predicted correctly</b>.
  <li> the cleaned dataset achieved a <b>sum of errors that is 17,76% of the actual ratings, and 25,93% of the 14.284 observations were predicted correctly</b>.
-</ul><br><br>
+</ul>
 This proves the point of not including movies with small number of ratings into the analysis.
 <h3>Further Improvements</h3>
 You may try one or more of the following steps to increase prediction accuracy:
