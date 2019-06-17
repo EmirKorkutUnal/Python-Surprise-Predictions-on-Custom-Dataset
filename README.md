@@ -687,5 +687,7 @@ You may try one or more of the following steps to increase prediction accuracy:
 </ul>
 <h2>Conclusion</h2>
 Human mind works in a way where we take a lot of variables into account when rating something like a movie. These include actors, director, screenplay, acting methods, visual effects etc. and it's quite unfair to ask a computer of today's standards to guess the potential rating a human would give to a movie only by taking that human's past ratings into account.<br><br>
-If we had an actual database where many factors are rated, the solution for predicting ratings would be a regression. In fact, <b>the necessity for rating prediction algorithms arises from the fact that we don't have sufficient information</b> for such a database to be built. Many people wouldn't willingly give this information due to a variety of reasons, one of the most important of them being security concerns.<br><br> 
-The algorithms in surprise library actually do a good job creating predictions under these conditions. 
+If we had an actual database where many factors are rated, the solution for predicting final ratings would be a regression. In fact, <b>the necessity for rating prediction algorithms arises from the fact that we don't have sufficient information</b> for such a database to be built. Many people wouldn't willingly give this information due to a variety of reasons, one of the most important of them being security concerns.<br><br> 
+The algorithms in surprise library actually do a good job creating predictions under these conditions.<br><br><br>
+Have a nice day,<br>
+Emir Korkut Ünal
