@@ -27,7 +27,7 @@ from surprise.model_selection import GridSearchCV
 Notice that we're importing scikit-learn's train_test_split. It will come in handy.<br>
 Datetime will be used for measuring model running time. Math will be used for a custom function.<br>
 The long line imports models from surprise. Dataset and Reader are needed to turn a standard dataframe into a surprise dataframe.<br><br>
-Next, it's time to load the dataset. You can download it from <a href=https://www.kaggle.com/rajmehra03/movielens100k/downloads/movielens100k.zip/2>this link</a>. It contains the same information found in MovieLens databases, but <b>variable names are different.</b> We'll use the 'ratings.csv' file within that zip, you can change the name to whatever you want to.
+Next, it's time to load the dataset. You can download it from <a href=https://www.kaggle.com/rajmehra03/movielens100k/downloads/movielens100k.zip/2>this link</a>. It contains the same information found in MovieLens databases, but <b>variable names are different.</b> We'll use 'ratings.csv' within that zip file; you can change the name to whatever you want to.
 <pre>
 df = pd.read_csv('C:/Users/Emir/Desktop/Movie Ratings.csv')
 df.head()
@@ -85,9 +85,9 @@ This is what our data looks like:
 df.shape
 >>>(100004, 4)
 </pre>
-We have a dataframe with 10.004 observations and 4 variables. The variables are the ID number for users, ID number for movies, rating (in a scale of 5) and a timestamp.
+We have a dataframe with 10.004 observations and 4 variables. The variables are the ID numbers for users, ID numbers for movies, rating (in a scale of 5) and a timestamp.
 <h3>Removing Movies that are Rated Less than Others</h3>
-<b>If a movie is rated only a small number of times, the ratings of that movie can skew prediction algorithms</b>; so we're going to get rid of some observations.
+<b>If a movie is rated only a small number of times, the ratings of that movie can skew prediction algorithms</b> (The proof for that is mentioned at the "Predictions" section); so we're going to get rid of some observations.
 <pre>
 df.groupby(['movieId']).size().max()/20
 >>>17.05
