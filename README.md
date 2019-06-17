@@ -281,7 +281,7 @@ Here are the results:
 </table>
 <b>KNNBaseline has the lowest RMSE, and BaselineOnly has the lowest MAE.</b><br><br>
 Let's continue with both of the models and explore what's ahead.
-<h3>Parameter Selection</h3>
+<h3>Parameter Optimization</h3>
 Since we know which models performed best, it's time to see if we can improve individual model performances by changing model parameters.<br><br>
 We're starting with BaselineOnly. <b>BaselineOnly model has a parameter space called bsl_options and the way to use this in grid search is different</b> than standard options. You need <a href=https://surprise.readthedocs.io/en/stable/getting_started.html#tune-algorithm-parameters-with-gridsearchcv>a particular treatment</a> where you define bsl_options parameters within another parenthesis that will be fed into grid search.
 <pre>
@@ -681,7 +681,7 @@ This proves the point of not including movies with small number of ratings into 
 <h3>Further Improvements</h3>
 You may try one or more of the following steps to increase prediction accuracy:
 <ul>
- <li>Try different parameters to tune the algorithms further.
+ <li>Tune algorithms further by adding other parameters into grid search and manipulating existing ones.
  <li>Fit other models which aren't included in this example.
  <li>Change the minimum number of ratings needed for a movie to be included in the analysis.
 </ul>
