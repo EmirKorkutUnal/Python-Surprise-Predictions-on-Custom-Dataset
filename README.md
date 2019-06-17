@@ -674,8 +674,18 @@ Results are similar to the first model, but <b>KNNBaseline performed slightly be
 Just to spice things up, you can <b>compare these results with the results of the analysis for the original database where small number of rating counts are not ruled out</b>. The code is not provided here, though the analysis is done through the same process; the only difference is that the removing step at the beginning is skipped.<br><br>
 When using BaselineOnly,
 <ul>
-<li> the full dataset achieved a <b>sum of errors that is 19,38% of the actual ratings, and 23,39% of the 20.001 observations are predicted correctly</b>.
-<li> the cleaned dataset achieved a <b>sum of errors that is 17,76% of the actual ratings, and 25,93% of the 14.284 observations were predicted correctly</b>.<br><br>
+ <li> the full dataset achieved a <b>sum of errors that is 19,38% of the actual ratings, and 23,39% of the 20.001 observations are predicted correctly</b>.
+ <li> the cleaned dataset achieved a <b>sum of errors that is 17,76% of the actual ratings, and 25,93% of the 14.284 observations were predicted correctly</b>.
+</ul><br><br>
 This proves the point of not including movies with small number of ratings into the analysis.
-<h3>Further Implementation</h3>
+<h3>Further Improvements</h3>
+You may try one or more of the following steps to increase prediction accuracy:
+<ul>
+ <li>Try different parameters to tune the algorithms further.
+ <li>Fit other models which aren't included in this example.
+ <li>Change the minimum number of ratings needed for a movie to be included in the analysis.
+</ul>
 <h2>Conclusion</h2>
+Human mind works in a way where we take a lot of variables into account when rating something like a movie. These include actors, director, screenplay, acting methods, visual effects etc. and it's quite unfair to ask a computer of today's standards to guess the potential rating a human would give to a movie only by taking that human's past ratings into account.<br><br>
+If we had an actual database where many factors are rated, the solution for predicting ratings would be a regression. In fact, <b>the necessity for rating prediction algorithms arises from the fact that we don't have sufficient information</b> for such a database to be built. Many people wouldn't willingly give this information due to a variety of reasons, one of the most important of them being security concerns.<br><br> 
+The algorithms in surprise library actually do a good job creating predictions under these conditions. 
