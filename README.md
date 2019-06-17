@@ -26,7 +26,8 @@ from surprise.model_selection import GridSearchCV
 </pre>
 Notice that we're importing scikit-learn's train_test_split. It will come in handy.<br>
 Datetime will be used for measuring model running time. Math will be used for a custom function.<br>
-The long line imports models from surprise. Dataset and Reader are needed to turn a standard dataframe into a surprise dataframe.<br><br>
+The long line imports models from surprise. There are more models found in surprise, but for the sake of this article only these are chosen.<br>
+Dataset and Reader are needed to turn a standard dataframe into a surprise dataframe.<br><br>
 Next, it's time to load the dataset. You can download it from <a href=https://www.kaggle.com/rajmehra03/movielens100k/downloads/movielens100k.zip/2>this link</a>. It contains the same information found in MovieLens databases, but <b>variable names are different.</b> We'll use 'ratings.csv' within that zip file; you can change the name to whatever you want to.
 <pre>
 df = pd.read_csv('C:/Users/Emir/Desktop/Movie Ratings.csv')
@@ -93,7 +94,7 @@ df.groupby(['movieId']).size().max()/20
 >>>17.05
 </pre>
 This code groups the observations by movieId and counts them, then takes the maximum number (the maximum times a movie is rated) and divides it by 20 to find a minimum rating count that is 5% of the maximum. You may choose any ratio you want.<br><br>
-Let's create a new dataframe just with the rating counts:
+Let's create a new dataframe just with the rating counts in order to eliminate some of the movies:
 <pre>
 ratingcounter = pd.DataFrame({'Count' : df.groupby(['movieId']).size()}).reset_index()
 ratingcounter.head()
@@ -138,7 +139,7 @@ ratingcounter.head()
 ratingcounter.shape
 >>>(9066, 2)
 </pre>
-There are 9066 movies, and you can see how many times they are rated in the new ratingcounter dataframe.
+There are 9.066 movies, and you can see how many times they are rated in the new ratingcounter dataframe.
 <pre>
 ratingcounter = ratingcounter.loc[ratingcounter['Count'] > 17]
 </pre>
@@ -147,7 +148,7 @@ This code eliminates any movie with rating count less than 17.
 ratingcounter.shape
 >>>(1428, 2)
 </pre>
-The number of movies is reduced to 1428. You may think that the number of discarded movies is too big (7638); but in a real life problem, you'll see that it becomes practically very hard to recommend any movie with good accuracy if there are too many movies to recommend. Also, a recommendation algorithm aims to push a customer to more popular choices because they are sold more often.  
+The number of movies is reduced to 1.428. You may think that the number of discarded movies is too big (7.638); but in a real life problem, you'll see that it becomes practically very hard to recommend any movie with good accuracy if there are too many movies to recommend. Also, a recommendation algorithm aims to push customers to more popular choices because they are sold more often.  
 <pre>
 reducer = df.movieId.isin(ratingcounter.movieId)
 df = df[reducer]
@@ -156,19 +157,19 @@ df.shape
 df.groupby(['movieId']).size().min()
 >>>18
 </pre>
-After filtering the movies with the lesat ratings, our new dataset consists of 71.419 movies and the smallest number of ratings becomes 18.
+After filtering the movies with the least ratings, our new dataset consists of 71.419 observations and the smallest number of ratings became 18.
 <h3>Model Selection</h3>
-<b>If you use the train_test_split of surprise, you can't use your train data with model selection.</b> So, we'll use the scikit-learn version of the train_test_split that we have already imported.
+<b>If you use the train_test_split of surprise, you can't use your train data with surprise models.</b> So, we'll use the scikit-learn version of the train_test_split that we have already imported.
 <pre>
 df_train, df_test = train_test_split(df, test_size=0.2, random_state=7)
 </pre>
-Still, we're going to need some changes to make the our database work with surprise.
+Next, we're going to make some changes to make our database work with surprise.
 <pre>
 reader = Reader()
 dfsv = Dataset.load_from_df(df[['userId', 'movieId', 'rating']], reader)
 cv_train = Dataset.load_from_df(df_train[['userId', 'movieId', 'rating']], reader)
 </pre>
-Reader helps turning a standard dataset into surprise dataset.<br>
+Reader helps turning a standard dataset into a surprise dataset.<br>
 dfsv is the surprise version of our normal database; this will be used later.<br>
 cv_train is our train data.<br><br>
 Let's run some models on the cv_train to see model performances. We'll use a for loop for this.<br><br>
@@ -193,10 +194,11 @@ for model in classes:
 print('All models have run. Call the CVResults dataframe for results.')
 </pre>
 <pre>
+>>>...
 >>>All models have run. Call the CVResults dataframe for results.
 </pre>
-CVResults is the database where all the results are stored. This dataframe is created at the beginning of this part of the code; in case something goes wrong and you need to run the code again, the dataframe will be recreated so that all previously appended rows would become void.<br><br>
-The loop puts the train data into every model we've defined and runs it two fold; then calculates means of RMSE and MAE (root mean squared error and mean absolute error), measures the time to run all this, and apppends all this information into the CVResults dataframe. The printed line indicates that the code has stopped running successfully.
+CVResults is the database where all the results are stored. It is wise to keep the dataframe creation step together with the rest of the code that is mentioned above; in case something goes wrong and you need to run the code again, the dataframe will be recreated so that all previously appended rows would become void.<br><br>
+The loop puts the train data into every model we've defined and runs it two fold; then calculates average of RMSE and MAE (root mean squared error and mean absolute error), measures the time to run all this, and apppends all this information into the CVResults dataframe. The printed line indicates that the code has finished running successfully.
 <pre>
 CVResults
 </pre>
@@ -278,10 +280,10 @@ Here are the results:
   </tbody>
 </table>
 <b>KNNBaseline has the lowest RMSE, and BaselineOnly has the lowest MAE.</b><br><br>
-For the sake of this article, let's continue with both of the models and explore what's ahead.
+Let's continue with both of the models and explore what's ahead.
 <h3>Parameter Selection</h3>
-Since we know which models performed best, it's time to see whether we can improve individual model performances or not.<br><br>
-We're starting with BaselineOnly. <b>BaselineOnly model has a parameter space called bsl_options and the way to use this in grid search is different</b> than standard options. You need <a href=https://surprise.readthedocs.io/en/stable/getting_started.html#tune-algorithm-parameters-with-gridsearchcv>a particular treatment</a> where you define grid search parameters within another parenthesis.
+Since we know which models performed best, it's time to see if we can improve individual model performances by changing model parameters.<br><br>
+We're starting with BaselineOnly. <b>BaselineOnly model has a parameter space called bsl_options and the way to use this in grid search is different</b> than standard options. You need <a href=https://surprise.readthedocs.io/en/stable/getting_started.html#tune-algorithm-parameters-with-gridsearchcv>a particular treatment</a> where you define bsl_options parameters within another parenthesis that will be fed into grid search.
 <pre>
 param_gridBO = {'bsl_options': {'method': ['als', 'sgd'],
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'reg': [1, 2],
@@ -296,7 +298,7 @@ gsBO.fit(data)
 print('Best RMSE:', gsBO.best_score['rmse'], gsBO.best_params['rmse'])
 print('Best MAE:', gsBO.best_score['mae'], gsBO.best_params['mae'])
 </pre>
-The method option allows to choose between alternating least squares and stochastic gradient descent.<br>
+The method option fits the model using either alternating least squares or stochastic gradient descent.<br>
 Reg denotes the regulation strength.<br>
 Learning rate refers to <a href=https://machinelearningmastery.com/understand-the-dynamics-of-learning-rate-on-deep-learning-neural-networks/>the amount that the weights are updated during training</a>.<br>
 Number of epochs specifies <a href=https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/>the number times that the learning algorithm will work through the entire training dataset</a>.<br>
@@ -322,10 +324,10 @@ print('Best MAE:', gsKNNB.best_score['mae'], gsKNNB.best_params['mae'])
 >>>Best RMSE: 0.8697179739351221 {'n_epochs': 5, 'lr_all': 0.002, 'reg_all': 0.4}
 >>>Best MAE: 0.6658498081065872 {'n_epochs': 5, 'lr_all': 0.002, 'reg_all': 0.4}
 </pre>
-Again, both RMSE and MAE are achieved by the same parameter combination.
+Again, both of best RMSE and MAE are achieved by the same parameter combination.
 <h3>Predictions</h3>
 Remember the dfsv database that we built at the beginning? Now it's time to use it.<br>
-<b>Surprise doesn't accept the test split of the standard Pandas dataframe</b> even after it is converted to a surprise dataset. So, we're going to need another method to get our test dataset. For this, the train_test_split method of surprise needs to be called: Beware that <b>since you've already imported scikit-learn's splitter, this train_test_split needs another name</b> so that it doesn't replace the previous one.
+<b>Surprise doesn't accept the test split of the standard Pandas dataframe</b> even after it is converted to a surprise dataset. We need the train_test_split method of surprise to get our test dataset. Beware that <b>since you've already imported scikit-learn's splitter, this train_test_split needs another name</b> so that it doesn't replace the previous one.
 <pre>
 from surprise.model_selection import train_test_split as tts2
 trainset, testset = tts2(dfsv, test_size=0.2, random_state=7)
@@ -337,7 +339,7 @@ predictions = BaselineOnly(bsl_options=gsBO.best_params['rmse']).fit(trainset).t
 ResultCatcher = pd.DataFrame(predictions, columns=['userId', 'movieId', 'Real_Rating', 'Estimated_Rating', 'details'])
 ResultCatcher.drop(['details'], axis=1, inplace=True)
 </pre>
-The nature of our dataset requires some adjustments for predictions: Currently, predictions are float numbers with many decimal places but the actual ratings are multiples of 0.5. To match predictions to actual ratings, we need a custom Python function.
+Currently, predictions are stated as float numbers with many decimal places but the actual ratings are multiples of 0,5. To match predictions to actual ratings, we need a custom Python function.
 <pre>
 def halfrounder(x):
 &nbsp;&nbsp;&nbsp;&nbsp;frac, whole = math.modf(x)
@@ -349,7 +351,7 @@ def halfrounder(x):
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = 0.5
 &nbsp;&nbsp;&nbsp;&nbsp;return whole + a
 </pre>
-This function takes a number, divides it into its whole and fraction, then assigns a new fraction depending on the old fraction and gives out the whole number + the new fraction. Let's apply it to the ResultCatcher dataframe and find the difference between actual ratings and predictions:
+This function takes a number, seperates its whole and fraction, then assigns a new fraction depending on the old fraction and gives out the whole number + the new fraction. Let's apply it to the ResultCatcher dataframe and find the difference between actual ratings and predictions:
 <pre>
 ResultCatcher['Estimation_Rounded'] = ResultCatcher.apply(lambda row: halfrounder(row.Estimated_Rating), axis=1)
 ResultCatcher['Error'] = abs(ResultCatcher['Real_Rating'] - ResultCatcher['Estimation_Rounded'])
@@ -425,7 +427,7 @@ ResultCatcher['Real_Rating'].count()
 ResultCatcher['Real_Rating'][ResultCatcher['Error'] == 0].count()
 >>>3704
 </pre>
-You can see that the <b>summary of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly.</b> To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
+You can see that the <b>sum of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly</b>. To take a look at how these errors are spread, we'll group real ratings and compare the group sizes with group prediction success:
 <pre>
 ResultComparison = pd.DataFrame({'Count': ResultCatcher.groupby(['Real_Rating']).size(),
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Avg_Rounded_Est': ResultCatcher.groupby(['Real_Rating'])['Estimation_Rounded'].mean()
@@ -669,9 +671,11 @@ ResultCatcher.plot.scatter(x='Real_Rating', y='Estimation_Rounded', alpha=0.002,
 </pre>
 <img src='https://github.com/EmirKorkutUnal/Python-Surprise-Predictions-on-Custom-Dataset/blob/master/Images/KNNBaseline_Scatterplot.png'>
 Results are similar to the first model, but <b>KNNBaseline performed slightly better</b>.<br><br>
-Just to spice things up, you can <b>compare these results with the results of the analysis for the original database where small number of rating counts are not ruled out</b>. The code is not provided here, though the analysis is done through the same process; the only difference is that the remobing step at the beginning is skipped.<br><br>
-When using BaselineOnly, the <b>summary of errors for the whole database is 19.38% of the actual ratings, and 23.39% of the 20.001 observations are predicted correctly</b>.<br>
-The numbers for the 'cleaner' dataset were that the <b>summary of errors is 17.76% of the actual ratings, and 25.93% of the 14.284 observations were predicted correctly</b>.<br><br>
+Just to spice things up, you can <b>compare these results with the results of the analysis for the original database where small number of rating counts are not ruled out</b>. The code is not provided here, though the analysis is done through the same process; the only difference is that the removing step at the beginning is skipped.<br><br>
+When using BaselineOnly,
+<ul>
+<li> the full dataset achieved a <b>sum of errors that is 19,38% of the actual ratings, and 23,39% of the 20.001 observations are predicted correctly</b>.
+<li> the cleaned dataset achieved a <b>sum of errors that is 17,76% of the actual ratings, and 25,93% of the 14.284 observations were predicted correctly</b>.<br><br>
 This proves the point of not including movies with small number of ratings into the analysis.
 <h3>Further Implementation</h3>
 <h2>Conclusion</h2>
